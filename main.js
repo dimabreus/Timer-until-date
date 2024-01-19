@@ -71,6 +71,16 @@ const formatSeconds = count => {
     }
 }
 
+const formatMilliseconds = count => {
+    if (count === 1) {
+        return "миллисекунда";
+    } else if ((count >= 2 && count <= 4)) {
+        return "миллисекунды";
+    } else {
+        return "миллисекунд"
+    }
+}
+
 const start = () => {
     setInterval(() => {
         let currentDate = new Date();
@@ -104,7 +114,7 @@ const start = () => {
             ${String(difHours).padStart(2, 0)} ${formatHours(difHours)} <br/>
             ${String(difMinutes).padStart(2, 0)} ${formatMinutes(difMinutes)} <br/>
             ${String(difSeconds).padStart(2, 0)} ${formatSeconds(difSeconds)} <br/>
-            ${String(difMilliSeconds).padStart(1, 0)} миллисекунд
+            ${String(difMilliSeconds).padStart(1, 0)} ${formatMilliseconds(difMilliSeconds)}
         `;
 
     }, 10);
