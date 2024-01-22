@@ -26,6 +26,29 @@ window.onload = () => {
         document.querySelector("#time").value = atob(document.cookie.match(/(?:^|;) *inputTime=([^;]*)/)[1]).split(",").map(el => el.padStart(2, '0')).join(":");
     }
 
+    const validParams = [
+        "date"
+    ];
+
+    const params = window.location.search.substring(1).split('&');
+    const filteredParams = params.filter((item) => {
+        [name] = item.split('='); //деструктуризацию используем
+        return validParams.includes(name);
+    });
+
+
+    if (filteredParams.length > 0) {
+        if (filteredParams[0].replace(/date=(\d+)/g, "$1")) {
+            var d = new Date(+filteredParams[0].replace(/date=(\d+)/g, "$1"));
+            if (d) {
+                document.querySelector("#date").value = `${String(d.getFullYear()).padStart(2, "4")}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+                document.querySelector("#time").value = `${String(d.getHours()).padStart(0, "2")}:${String(d.getMinutes()).padStart(0, "2")}`
+            }
+        }
+        console.log()
+        document.querySelector("#date").value
+    }
+ 
     if (document.querySelector("#date").value) dateCheck(document.querySelector("#date").value);
     if (document.querySelector("#time").value) timeCheck(document.querySelector("#time").value);
 
@@ -119,3 +142,14 @@ const start = () => {
 
     }, 10);
 };
+
+const share = () => {
+    if (!date) {
+        alert("Дата не введена");
+        return;
+    }
+
+    navigator.clipboard.writeText(`https://dimabreus.github.io/Timer-until-date/?date=${date.getTime()}`).then(() => {
+        alert("Ссылка скопирована")
+    })
+}

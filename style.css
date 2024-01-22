@@ -11,9 +11,14 @@ body {
     background: rgb(56, 56, 56);
 }
 
-input {
+input,
+button {
     background-color: rgb(35, 35, 35);
     border: none;
     padding: 5px 15px;
     border-radius: 5px;
+}
+
+button:hover{
+    cursor: pointer;
 }
