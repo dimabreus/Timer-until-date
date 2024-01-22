@@ -42,7 +42,7 @@ window.onload = () => {
             var d = new Date(+filteredParams[0].replace(/date=(\d+)/g, "$1"));
             if (d) {
                 document.querySelector("#date").value = `${String(d.getFullYear()).padStart(2, "4")}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-                document.querySelector("#time").value = `${String(d.getHours()).padStart(0, "2")}:${String(d.getMinutes()).padStart(0, "2")}`
+                document.querySelector("#time").value = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`
             }
         }
         console.log()
