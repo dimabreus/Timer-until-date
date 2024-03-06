@@ -149,7 +149,7 @@ const share = () => {
         return;
     }
 
-    navigator.clipboard.writeText(`https://dimabreus.github.io/Timer-until-date/?date=${date.getTime()}`).then(() => {
+    navigator.clipboard.writeText(`https://dimabreus.ru/Timer-until-date/?date=${date.getTime()}`).then(() => {
         alert("Ссылка скопирована")
     })
 }
