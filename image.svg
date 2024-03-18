@@ -1,0 +1,118 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Встраиваем JavaScript в SVG -->
+    <script type="text/ecmascript"><![CDATA[
+      window.onload = function() {
+        const formatDays = count => {
+            if (count === 1) {
+                return "день";
+            } else if (count >= 2 && count <= 4) {
+                return "дня";
+            } else {
+                return "дней";
+            }
+        }
+
+        const formatHours = count => {
+            if (count === 1 || count === 21) {
+                return "час";
+            } else if ((count >= 2 && count <= 4) || (count >= 22 && count <= 24)) {
+                return "часа";
+            } else {
+                return "часов";
+            }
+        }
+
+        const formatMinutes = count => {
+            if (count === 1 || count === 21 || count === 31 || count === 41 || count === 51) {
+                return "минута";
+            } else if ((count >= 2 && count <= 4) || (count >= 22 && count <= 24) || (count >= 32 && count <= 34) || (count >= 42 && count <= 44) || (count >= 52 && count <= 54)) {
+                return "минуты";
+            } else {
+                return "минут";
+            }
+        }
+
+        const formatSeconds = count => {
+            if (count === 1 || count === 21 || count === 31 || count === 41 || count === 51) {
+                return "секунда";
+            } else if ((count >= 2 && count <= 4) || (count >= 22 && count <= 24) || (count >= 32 && count <= 34) || (count >= 42 && count <= 44) || (count >= 52 && count <= 54)) {
+                return "секунды";
+            } else {
+                return "секунд";
+            }
+        }
+
+        const formatMilliseconds = count => {
+            if (count === 1) {
+                return "миллисекунда";
+            } else if ((count >= 2 && count <= 4)) {
+                return "миллисекунды";
+            } else {
+                return "миллисекунд"
+            }
+        }
+        const start = (date) => {
+            setInterval(() => {
+                let currentDate = new Date();
+
+                let dif = date - currentDate;
+
+                if (dif < 0) {
+                    output.textContent = "Время истекло";
+                    return;
+                }
+
+                let difMilliSeconds;
+
+                difMilliSeconds = +String(dif)[String(dif).length - 3];
+
+
+                let difSeconds = +String(dif).slice(0, String(dif).length - 3);
+
+                let difMinutes = Math.floor(difSeconds / 60);
+                difSeconds = difSeconds - difMinutes * 60;
+
+                let difHours = Math.floor(difMinutes / 60);
+                difMinutes = difMinutes - difHours * 60;
+
+                let difDays = Math.floor(difHours / 24);
+                difHours = difHours - difDays * 24;
+
+                document.querySelector("#text1").textContent = `${String(difDays)} ${formatDays(difDays)}`;
+                document.querySelector("#text2").textContent = `${String(difHours).padStart(2, 0)} ${formatHours(difHours)}`;
+                document.querySelector("#text3").textContent = `${String(difMinutes).padStart(2, 0)} ${formatMinutes(difMinutes)}`;
+                document.querySelector("#text4").textContent = `${String(difSeconds).padStart(2, 0)} ${formatSeconds(difSeconds)}`;
+                document.querySelector("#text5").textContent = `${String(difMilliSeconds).padStart(1, 0)} ${formatMilliseconds(difMilliSeconds)}`;
+
+            }, 10);
+        };
+        const validParams = [
+            "date"
+        ];
+
+        const params = window.location.search.substring(1).split('&');
+        const filteredParams = params.filter((item) => {
+            [name] = item.split('=');
+            return validParams.includes(name);
+        });
+
+
+        if (filteredParams.length > 0) {
+            if (filteredParams[0].replace(/date=(\d+)/g, "$1")) {
+                const date1 = new Date(+filteredParams[0].replace(/date=(\d+)/g, "$1"));
+
+                start(date1)
+            }
+        }
+      }
+    ]]></script>
+
+    <rect width="100%" height="100%" fill="black"/>
+  
+    <text id="text1" x="10" y="20" font-family="Arial" font-size="20" fill="white">Загрузка...</text>
+    <text id="text2" x="10" y="40" font-family="Arial" font-size="20" fill="white"></text>
+    <text id="text3" x="10" y="60" font-family="Arial" font-size="20" fill="white"></text>
+    <text id="text4" x="10" y="80" font-family="Arial" font-size="20" fill="white"></text>
+    <text id="text5" x="10" y="100" font-family="Arial" font-size="20" fill="white"></text>
+  </svg>
+  

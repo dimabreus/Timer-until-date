@@ -21,18 +21,13 @@ const createDate = () => {
 };
 
 window.onload = () => {
-    if (document.cookie && document.cookie != "") {
-        document.querySelector("#date").value = atob(document.cookie.match(/(?:^|;) *inputDate=([^;]*)/)[1]).split(",").map((el, index) => index === 1 ? String(Number(el) + 1).padStart(2, '0') : (index === 0 ? el.padStart(4, '0') : el.padStart(2, '0'))).join("-");
-        document.querySelector("#time").value = atob(document.cookie.match(/(?:^|;) *inputTime=([^;]*)/)[1]).split(",").map(el => el.padStart(2, '0')).join(":");
-    }
-
     const validParams = [
         "date"
     ];
 
     const params = window.location.search.substring(1).split('&');
     const filteredParams = params.filter((item) => {
-        [name] = item.split('='); //деструктуризацию используем
+        [name] = item.split('=');
         return validParams.includes(name);
     });
 
@@ -48,7 +43,7 @@ window.onload = () => {
         console.log()
         document.querySelector("#date").value
     }
- 
+
     if (document.querySelector("#date").value) dateCheck(document.querySelector("#date").value);
     if (document.querySelector("#time").value) timeCheck(document.querySelector("#time").value);
 
