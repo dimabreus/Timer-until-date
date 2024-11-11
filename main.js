@@ -21,26 +21,16 @@ const createDate = () => {
 };
 
 window.onload = () => {
-    const validParams = [
-        "date"
-    ];
+    const params = new URLSearchParams(window.location.search);
 
-    const params = window.location.search.substring(1).split('&');
-    const filteredParams = params.filter((item) => {
-        [name] = item.split('=');
-        return validParams.includes(name);
-    });
+    if (params.get('date')) {
+        var d = new Date(+params.get('date'));
 
-
-    if (filteredParams.length > 0) {
-        if (filteredParams[0].replace(/date=(\d+)/g, "$1")) {
-            var d = new Date(+filteredParams[0].replace(/date=(\d+)/g, "$1"));
-            if (d) {
-                document.querySelector("#date").value = `${String(d.getFullYear()).padStart(2, "4")}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-                document.querySelector("#time").value = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`
-            }
+        if (d) {
+            document.querySelector("#date").value = `${String(d.getFullYear()).padStart(2, "4")}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+            document.querySelector("#time").value = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`
         }
-        console.log()
+
         document.querySelector("#date").value
     }
 
@@ -144,7 +134,9 @@ const share = () => {
         return;
     }
 
-    navigator.clipboard.writeText(`https://dimabreus.ru/Timer-until-date/?date=${date.getTime()}`).then(() => {
+    const url = window.location.origin + window.location.pathname;
+
+    navigator.clipboard.writeText(`${url}?date=${date.getTime()}`).then(() => {
         alert("Ссылка скопирована")
     })
 }
